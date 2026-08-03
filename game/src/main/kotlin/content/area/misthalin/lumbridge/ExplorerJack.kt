@@ -39,8 +39,12 @@ class ExplorerJack : Script {
                 npc<Happy>("You have? Oh, well done! We'll make an explorer of you yet.")
                 player<Happy>("Thank you. Is there a reward?")
                 npc<Neutral>("Ah, yes indeed.")
-                if (!inventory.add("explorers_ring_1", "antique_lamp_beginner_lumbridge_tasks")) {
-                    npc<Neutral>("You don't seem to have space, speak to me again when you have two free spaces in your inventory.") // TODO proper message (not in osrs)
+                inventory.transaction {
+                    add("coins", 25_000)
+                }
+
+                if (inventory.transaction.error != TransactionError.None) {
+                    npc<Neutral>("You don't seem to have enough inventory space. Please make some room and speak to me again.")
                     return@npcOperate
                 }
                 set("unlocked_emote_explore", true)
@@ -117,11 +121,11 @@ class ExplorerJack : Script {
         var coins = 0
         for (task in rewarded until progress) {
             coins += when {
-                task < 10 -> 10
-                task < 25 -> 40
-                task < 50 -> 160
-                task < 75 -> 640
-                else -> 2560
+                task < 10 -> 5_000
+                task < 25 -> 12_000
+                task < 50 -> 25_000
+                task < 75 -> 55_000
+                else -> 50_000
             }
         }
         // Grant each reward separately and only mark what actually fits as claimed -

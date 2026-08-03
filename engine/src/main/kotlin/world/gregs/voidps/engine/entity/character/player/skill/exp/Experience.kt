@@ -46,7 +46,22 @@ class Experience(
         if (experience <= 0.0) {
             return
         }
-        val actual = experience * 10 * multiplier * Settings["world.experienceRate", DEFAULT_EXPERIENCE_RATE]
+
+        // Current level in the skill
+        val level = Experience.level(skill, get(skill))
+
+        // XP rate based on current level
+        val rate = when {
+            level <= 50 -> 25.0
+            level <= 70 -> 15.0
+            else -> 5.0
+        }
+
+        // Keep the global experience rate as an additional multiplier
+        val globalRate = Settings["world.experienceRate", DEFAULT_EXPERIENCE_RATE]
+
+        val actual = experience * 10 * multiplier * rate * globalRate
+
         if (blocked.contains(skill)) {
             Skills.blocked(player, skill, actual.toInt())
         } else {

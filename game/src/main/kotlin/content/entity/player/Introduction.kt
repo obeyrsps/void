@@ -47,7 +47,7 @@ class Introduction : Script {
 
     fun setup(player: Player) {
         player.queue("welcome") {
-            player.statement("Welcome to Lumbridge! To get more help, simply click on the Lumbridge Guide or one of the Tutors - these can be found by looking for the question mark icon on your minimap. If you find you are lost at any time, look for a signpost or use the Lumbridge Home Teleport spell.")
+            player.statement("Welcome to Runic! To get more help, simply click on the Lumbridge Guide or one of the Tutors - these can be found by looking for the question mark icon on your minimap. If you find you are lost at any time, look for a signpost or use the Lumbridge Home Teleport spell.")
         }
         player.stop("delay")
         player["creation"] = System.currentTimeMillis()
@@ -55,7 +55,7 @@ class Introduction : Script {
         if (!Settings["world.setup.gear", true]) {
             return
         }
-        player.bank.add("coins", 25)
+        player.bank.add("coins", 3500)
         player.inventory.apply {
             add("bronze_hatchet")
             add("tinderbox")
@@ -69,12 +69,13 @@ class Introduction : Script {
             add("bronze_sword")
             add("wooden_shield")
             add("shortbow")
-            add("bronze_arrow", 25)
-            add("air_rune", 25)
-            add("mind_rune", 15)
-            add("water_rune", 6)
-            add("earth_rune", 4)
-            add("body_rune", 2)
+            add("bronze_arrow", 75)
+            add("air_rune", 75)
+            add("mind_rune", 75)
+            add("water_rune", 35)
+            add("earth_rune", 35)
+            add("body_rune", 35)
+            add("fire_rune", 35)
         }
     }
 }
